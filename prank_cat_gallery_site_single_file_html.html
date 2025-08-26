@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Exclusive • 18+</title>
+  <meta name="description" content="Totally serious exclusive content… definitely not cats." />
+  <style>
+    :root {
+      --bg: #0b0f17;
+      --card: #121827;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #60a5fa;
+      --accent-2: #a78bfa;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: radial-gradient(1200px 800px at 10% 10%, #111827 0%, #0b0f17 50%, #070b11 100%);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+
+    /* Fake landing (parody — no brand assets) */
+    .landing {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 2rem;
+    }
+    .card {
+      width: 100%;
+      max-width: 760px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .glow {
+      position: absolute; inset: -40%;
+      background: radial-gradient(circle at 30% 20%, rgba(96,165,250,0.24), transparent 40%),
+                  radial-gradient(circle at 80% 10%, rgba(167,139,250,0.16), transparent 40%),
+                  radial-gradient(circle at 50% 90%, rgba(52,211,153,0.1), transparent 40%);
+      filter: blur(30px);
+      pointer-events: none;
+    }
+    .brandline {
+      display: flex; align-items: center; gap: .7rem;
+      font-weight: 800; letter-spacing: .3px;
+      font-size: clamp(24px, 4.5vw, 36px);
+    }
+    .brandline .dot { width: .7em; height: .7em; border-radius: 999px; background: linear-gradient(45deg, var(--accent), var(--accent-2)); display: inline-block;}
+    .muted { color: var(--muted); }
+    .row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .badges { display: flex; gap: .5rem; flex-wrap: wrap; }
+    .pill { background: #111827; border: 1px solid rgba(255,255,255,0.08); padding: .35rem .7rem; border-radius: 999px; font-size: .85rem; color: var(--muted);} 
+
+    .cta {
+      display: inline-flex; align-items: center; gap: .6rem;
+      padding: .9rem 1.2rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(180deg, rgba(96,165,250,0.22), rgba(96,165,250,0.15));
+      color: white; text-decoration: none; font-weight: 700;
+      cursor: pointer; transition: transform .08s ease, filter .2s ease;
+    }
+    .cta:active { transform: translateY(1px) scale(0.99); }
+
+    .tiny { font-size: .8rem; }
+    .center { text-align: center; }
+
+    /* Gallery */
+    .hidden { display: none !important; }
+    .gallery-wrap { max-width: 1200px; margin: 0 auto; padding: 16px; }
+    .toolbar { display:flex; align-items:center; justify-content:space-between; gap: 1rem; margin: 10px 0 14px; }
+    input[type="text"] {
+      background: #0f1522; border: 1px solid rgba(255,255,255,0.08); color: var(--text);
+      border-radius: 10px; padding: .7rem 1rem; min-width: 240px; outline: none;
+    }
+    .grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 10px;
+    }
+    .tile {
+      position: relative; border-radius: 14px; overflow: hidden; background: #0f1522; border: 1px solid rgba(255,255,255,0.06);
+    }
+    .tile img { width: 100%; height: 180px; object-fit: cover; display: block; filter: saturate(1.05) contrast(1.05); }
+    .tile .cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 8px 10px; font-size: .85rem; background: linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,.55)); }
+
+    .load-more { display:block; margin: 16px auto 40px; }
+
+    .footer { color: var(--muted); font-size: .8rem; opacity: .9; text-align:center; padding: 1.5rem 1rem; }
+    .footer a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <!-- Parody landing -->
+  <section class="landing" id="landing">
+    <div class="card">
+      <div class="glow"></div>
+      <div class="brandline" aria-label="Parody brand name">
+        <span>OnlyPaws</span><span class="dot"></span>
+      </div>
+      <p class="muted" style="margin:.4rem 0 1.2rem">18+ Exclusive… totally legit… absolutely not cat pics 🙃</p>
+      <div class="row">
+        <div class="badges">
+          <span class="pill">Top 0.01%</span>
+          <span class="pill">Verified</span>
+          <span class="pill">🔥 1,000+ uploads</span>
+        </div>
+        <button id="enterBtn" class="cta" type="button" aria-controls="gallery">Subscribe • $0.00</button>
+      </div>
+      <p class="tiny muted" style="margin-top:1rem">This is a parody page for humor. No affiliation with any real platform.</p>
+    </div>
+  </section>
+
+  <!-- Cat gallery -->
+  <main id="gallery" class="hidden" aria-live="polite">
+    <div class="gallery-wrap">
+      <div class="toolbar">
+        <div>
+          <div class="brandline" style="font-size:22px"><span>OnlyPaws</span><span class="dot" style="transform: scale(.7)"></span></div>
+          <div class="muted tiny">Welcome. Enjoy the cats. 🐾</div>
+        </div>
+        <input id="search" type="text" placeholder="Filter captions (e.g., tuxedo, loaf, blep)" />
+      </div>
+      <div id="grid" class="grid" role="list"></div>
+      <button id="moreBtn" class="cta load-more" type="button">Load more</button>
+      <div class="footer">Made for laughs. Parody — do not impersonate real brands or collect user data.</div>
+    </div>
+  </main>
+
+  <script>
+    // Safety note for you (the prankster): keep it playful, not harmful.
+
+    const landing = document.getElementById('landing');
+    const enterBtn = document.getElementById('enterBtn');
+    const gallery = document.getElementById('gallery');
+    const grid = document.getElementById('grid');
+    const moreBtn = document.getElementById('moreBtn');
+    const search = document.getElementById('search');
+
+    // Generate many cat images using placekitten + picsum as fallback.
+    const TOTAL_TARGET = 1000;      // up to 1000
+    const CHUNK = 100;              // render in chunks to avoid jank
+    let rendered = 0;
+
+    function randomCatUrl() {
+      // Alternate providers to vary images
+      const useKitten = Math.random() > 0.3;
+      const w = Math.floor(200 + Math.random() * 200);
+      const h = Math.floor(180 + Math.random() * 220);
+      if (useKitten) {
+        // placekitten returns a fixed image per size; add a cache-buster
+        return `https://placekitten.com/${w}/${h}?v=${Math.floor(Math.random()*1e9)}`;
+      } else {
+        return `https://picsum.photos/${w}/${h}?random=${Math.floor(Math.random()*1e9)}`;
+      }
+    }
+
+    function captionFor(i) {
+      const labels = ['loaf', 'blep', 'nap', 'zoomies', 'void', 'tabby', 'tuxedo', 'chonky', 'biscuit maker', 'goblin mode'];
+      return `Cat #${i} — ${labels[i % labels.length]}`;
+    }
+
+    function makeTile(i) {
+      const li = document.createElement('div');
+      li.className = 'tile';
+      li.setAttribute('role','listitem');
+
+      const img = document.createElement('img');
+      img.loading = 'lazy';
+      img.alt = captionFor(i);
+      img.src = randomCatUrl();
+
+      const cap = document.createElement('div');
+      cap.className = 'cap';
+      cap.textContent = captionFor(i);
+
+      li.appendChild(img);
+      li.appendChild(cap);
+      return li;
+    }
+
+    function renderChunk() {
+      const frag = document.createDocumentFragment();
+      const end = Math.min(rendered + CHUNK, TOTAL_TARGET);
+      for (let i = rendered + 1; i <= end; i++) {
+        frag.appendChild(makeTile(i));
+      }
+      grid.appendChild(frag);
+      rendered = end;
+      if (rendered >= TOTAL_TARGET) moreBtn.classList.add('hidden');
+    }
+
+    function filterTiles(q) {
+      const term = q.trim().toLowerCase();
+      const items = grid.children;
+      for (const el of items) {
+        const text = el.querySelector('.cap')?.textContent?.toLowerCase() || '';
+        el.style.display = term && !text.includes(term) ? 'none' : '';
+      }
+    }
+
+    enterBtn.addEventListener('click', () => {
+      landing.classList.add('hidden');
+      gallery.classList.remove('hidden');
+      if (rendered === 0) renderChunk();
+    });
+
+    moreBtn.addEventListener('click', renderChunk);
+    search.addEventListener('input', (e) => filterTiles(e.target.value));
+
+    // Optional: auto-enter after 1.6s if someone just lands on it
+    setTimeout(() => {
+      if (!gallery || !landing || gallery.classList.contains('hidden') === false) return;
+      // Only auto-enter for desktop browsers
+      if (window.innerWidth > 700) enterBtn.click();
+    }, 1600);
+  </script>
+</body>
+</html>
